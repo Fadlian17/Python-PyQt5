@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QComboBox, QVBoxLayout, QWidget
 import random
-import string
 
 
 class GenerateApp(QMainWindow):
