@@ -4,9 +4,9 @@ from PyQt5.QtCore import Qt
 import requests
 
 
-class JsonPlace(QMainWindow):
+class JsonPlacesApp(QMainWindow):
     def __init__(self, *args, **kwargs):
-        super(JsonPlace, self).__init__(*args, **kwargs)
+        super(JsonPlacesApp, self).__init__(*args, **kwargs)
         self.label = Labels()
         self.setLayout()
         self.setWidget()
@@ -15,8 +15,8 @@ class JsonPlace(QMainWindow):
         # object layout
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.label.addLabel("name and data Json"))
-        url = requests.get('https://jsonplaceholder.typicode.com/users')
-        response = url.json()
+        http = requests.get('https://jsonplaceholder.typicode.com/users')
+        response = http.json()
         for x in response:
             self.layout.addWidget(self.label.addLabel('Name : {} - Address: {},{},{}'.format(
                 x['name'], x['address']['street'], x['address']['suite'], x['address']['city'])))
@@ -43,6 +43,7 @@ class Labels():
 
 if __name__ == "__main__":
     app = QApplication([])
-    window = JsonPlace()
+    window = JsonPlacesApp()
+    window.setWindowTitle("002.py")
     window.show()
     app.exec_()

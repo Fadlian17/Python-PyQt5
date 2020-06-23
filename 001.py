@@ -13,12 +13,10 @@ class GenerateApp(QMainWindow):
     def mainWidget(self):
         # combo box
         self.comboBox = QComboBox()
-        self.comboBox.addItem("orange")
-        self.comboBox.addItem("apple")
-        self.comboBox.addItem("mango")
-        self.comboBox.addItem("grape")
-        self.comboBox.addItem("peach")
-        self.comboBox.addItem("watermelon")
+        datalist = ["orange", "apple", "mango", "grape", "peach", "watermelon"]
+        data_shuffle = random.sample(datalist, len(datalist))
+        data_shuffle = self.comboBox.addItems(data_shuffle)
+        return self.comboBox
 
     def setLayout(self):
         self.layout = QVBoxLayout()
@@ -40,5 +38,6 @@ class Labiles():
 if __name__ == "__main__":
     app = QApplication([])
     generates = GenerateApp()
+    generates.setWindowTitle("001.py")
     generates.show()
     app.exec_()

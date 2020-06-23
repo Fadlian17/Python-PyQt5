@@ -1,48 +1,31 @@
-## from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QComboBox, QCheckBox, QRadioButton
-from PyQt5.QtCore import Qt
+# Combo Box Filter Data
+
+import sys
+import random
 import requests
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QComboBox
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import pyqtSlot
 
 
-class JsonPlace(QMainWindow):
-    def __init__(self, *args, **kwargs):
-        super(JsonPlace, self).__init__(*args, **kwargs)
-        self.label = Labels()
-        self.setLayout()
-        self.setWidget()
+def Filter():
+    app = QApplication(sys.argv)
+    widget = QWidget()
+    comboBox = QComboBox(widget)
+    http = requests.get('https://randomuser.me/api/?results=10')
+    http_response = http.json()['results']
+    http_response = [http_response[i]['gender']
+                     for i in range(len(http_response))]
+    http_response = list(set(http_response))
+    # loop
+    for hr in http_response:
+        comboBox.addItem(hr)
 
-    def setLayout(self):
-        # object layout
-        self.layout = QVBoxLayout()
-        self.layout.addWidget(self.label.addLabel("name and data Json"))
-        url = requests.get('https://randomuser.me/api/?results=10')
-        response = url.json()
-        for x in response:
-            self.layout.addWidget(self.label.addLabel('Gender: {}'.format(
-                x['gender'])))
-
-    def setWidget(self):
-        # object widget
-        self.widget = QWidget()
-        self.widget.setLayout(self.layout)
-        # set "object widget" to centralWidget of mainWindow()
-        # centralWidget() hanya menerima satu widget
-        self.setCentralWidget(self.widget)
+    widget.setFixedSize(200, 200)
+    widget.setWindowTitle("003.py")
+    widget.show()
+    sys.exit(app.exec_())
 
 
-class checkBoxs():
-    def __init__(self, text):
-        self.addCheckBox = QCheckBox(text)
-
-
-class Labels():
-    def addLabel(self, text):
-        self.label = QLabel(text)
-        return self.label
-
-
-if __name__ == "__main__":
-    app = QApplication([])
-    window = JsonPlace()
-    window.show()
-    app.exec_()
+if __name__ == '__main__':
+    Filter()
